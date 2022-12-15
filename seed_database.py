@@ -56,7 +56,6 @@ def get_recipes():
 
 def add_recipes_to_db():
     recipes = get_recipes()
-
     for recipe in recipes:
         print(f"\033[33m█▓▒░ Adding recipe '{recipe['title']}' to DB. \033[0m")
         record = crud.create_recipe(
@@ -64,8 +63,9 @@ def add_recipes_to_db():
             recipe["summary"],
             recipe["instructions"]
         )
+
+        model.db.session.add(record)
     
-    model.db.session.add(record)
     model.db.session.commit()
 
 create_fake_users(user_data)

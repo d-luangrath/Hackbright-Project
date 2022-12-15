@@ -30,8 +30,8 @@ def create_fake_users(user_data):
             user["password"]
         )
 
-    db_user = crud.create_user(name, email, password)
-    users_in_db.append(db_user)
+        db_user = crud.create_user(name, email, password)
+        users_in_db.append(db_user)
 
     model.db.session.add_all(users_in_db)
     model.db.session.commit()
@@ -40,6 +40,7 @@ def create_fake_users(user_data):
 # Create recipes from APIs and store them in a dict
 def get_recipes():
     print("Getting recipes using API")
+    print("\033[36m█▓▒░ Getting recipes using API \033[0m")
     api_key = os.environ.get("SPOONACULAR_API_KEY", None)
     if not api_key:
         raise Exception("API key is not found. Did you forget to export it?")
@@ -63,7 +64,6 @@ def add_recipes_to_db():
             recipe["summary"],
             recipe["instructions"]
         )
-        breakpoint()
     
     model.db.session.add(record)
     model.db.session.commit()

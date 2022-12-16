@@ -28,6 +28,7 @@ class Recipe(db.Model):
     recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     recipe_name = db.Column(db.String(200), unique=True)
+    rec_ingredient = db.Column(db.String(100), nullable=True)
     description = db.Column(db.Text)
     direction = db.Column(db.Text)
 
@@ -35,7 +36,7 @@ class Recipe(db.Model):
     ingredients = db.relationship("Ingredient", back_populates="recipes")
 
     def __repr__(self):
-        return f"<Recipe recipe_name={self.recipe_name}, description={self.description}, direction={self.direction}>"
+        return f"<Recipe recipe_name={self.recipe_name}, description={self.description}, direction={self.direction}, ingredient={self.rec_ingredient}>"
 
 
 class Ingredient(db.Model):

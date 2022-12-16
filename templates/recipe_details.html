@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.recipe_name }} - Details{% endblock %}
+
+{% block body %}
+<h1>{{ recipe.recipe_name }}</h1>
+<title>{{ recipe.recipe_name }}</title>
+
+<p id="summary">
+    Summary: <br>
+{{ recipe.rec_ingredient }}
+</p>
+
+<p id="ingredients">
+    Ingredients: <br>
+{{ recipe.direction }}
+</p>
+
+<p id="instructions">
+    Insrtructions: <br>
+{{ recipe.direction }}
+</p>
+
+{% endblock %}

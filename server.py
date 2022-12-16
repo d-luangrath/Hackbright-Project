@@ -27,7 +27,7 @@ def register_user():
 
     user = crud.get_user_by_email(email)
     if user:
-        flash("Cannot create an account with that email. Try again.")
+        flash("An account with that email already exists. Try again.")
     else:
         user = crud.create_user(name, email, password)
         db.session.add(user)
@@ -36,9 +36,14 @@ def register_user():
     
     return  redirect("/")
 
+
 @app.route("/users/<user_id>")
 def profile(user_id):
     """Show user profile."""
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template()
 
     pass
 
@@ -51,25 +56,32 @@ def process_login():
     email = request.form.get("email")
     password = request.form.get("password")
 
+    # check if fields are not empty
+    if not name or not email or not password:
+        flash("Please input required fields")
+        return redirect("/")
+
+    print(f"\033[36m█▓▒░ {name} - {email} \033[0m")
+
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
         flash("The email or password you entered was incorrect.")
-    else:
-        session["name"] = user.name
-        flash(f"Welcome back, {user.name}!")
+        return redirect("/")
+   
+    session["name"] = user.name
+    session["user_email"] = user.email
+    flash(f"Welcome back, {user.name}!")
+
+    return redirect("/recipes")
     
-    return redirect("/")
-    
 
+@app.route("/recipes")
+def all_recipes():
+    """View all recipes."""
 
+    recipes = crud.get_all_recipes()
 
-
-
-
-
-
-
-
+    return render_template("all_recipes.html", recipes=recipes)
 
 
 if __name__ == "__main__":

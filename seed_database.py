@@ -61,7 +61,7 @@ def add_recipes_to_db():
         record = crud.create_recipe(
             recipe["title"],
             recipe["summary"],
-            recipe["instructions"]
+            recipe["instructions"],
         )
 
         model.db.session.add(record)

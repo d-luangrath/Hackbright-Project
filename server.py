@@ -19,7 +19,7 @@ def homepage():
 
 @app.route("/signup")
 def create_acct():
-    """View create an account for user"""
+    """View create an account for user."""
     return render_template("create_acct.html")
 
 
@@ -40,20 +40,12 @@ def register_user():
     return redirect("/")
 
 
-@app.route("/users/<user_id>")
-def profile(user_id):
-    """Show user profile."""
-    user = crud.get_user_by_id(user_id)
-    return render_template()
-    pass
-
-
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
-    name = request.form.get("name")
-    email = request.form.get("email")
-    password = request.form.get("password")
+    name = request.form.get("login-name")
+    email = request.form.get("login-email")
+    password = request.form.get("login-pass")
     # check if fields are not empty
     if not name or not email or not password:
         flash("Please input required fields.")
@@ -69,6 +61,12 @@ def process_login():
     flash(f"Welcome back, {user.name}!")
     return redirect("/recipes")
     
+# @app.route("/login/<user_id>")
+# def profile(user_id):
+#     """Show user profile."""
+#     user = crud.get_user_by_id(user_id)
+#     return render_template("profile.html", user=user)
+
 
 @app.route("/recipes")
 def all_recipes():
@@ -79,17 +77,9 @@ def all_recipes():
 
 @app.route("/recipe/<recipe_id>")
 def recipe(recipe_id):
-    """View a specific recipe"""
+    """View a specific recipe."""
     recipe = crud.get_recipe_by_id(recipe_id)
     return render_template("recipe_details.html", recipe=recipe)
-
-
-@app.route("/recipe_details")
-def recipe_details():
-    """View details on chosen recipe"""
-
-
-
 
 
 

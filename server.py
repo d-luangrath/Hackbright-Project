@@ -56,16 +56,25 @@ def process_login():
         flash("The email or password you entered was incorrect.")
         return redirect("/")
    
+    session["user_id"] = user.user_id
     session["name"] = user.name
     session["user_email"] = user.email
-    flash(f"Welcome back, {user.name}!")
-    return redirect("/recipes")
+    # flash(f"Welcome back, {user.name}!")
+    return redirect("/mainpage")
     
-# @app.route("/login/<user_id>")
-# def profile(user_id):
-#     """Show user profile."""
-#     user = crud.get_user_by_id(user_id)
-#     return render_template("profile.html", user=user)
+
+@app.route("/mainpage")
+def mainpage():
+    """Display contents on the main page."""
+    return render_template("mainpage.html")
+
+
+@app.route("/mainpage/<user_id>")
+def profile(user_id):
+    """Show user profile."""
+    user_id = session["user_id"]
+    user = crud.get_user_by_id(user_id)
+    return render_template("profile.html", user=user)
 
 
 @app.route("/recipes")

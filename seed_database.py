@@ -42,14 +42,18 @@ def get_recipes():
     print("Getting recipes using API")
     print("\033[36m█▓▒░ Getting recipes using API \033[0m")
     api_key = os.environ.get("SPOONACULAR_API_KEY", None)
+    # print(api_key)
     if not api_key:
         raise Exception("API key is not found. Did you forget to export it?")
 
     url = f"https://api.spoonacular.com/recipes/random?apiKey={api_key}"
+    # print(url)
     payload = {'number': 3}
 
     response = requests.request("GET", url, params=payload)
+    # print(response)
     recipes = response.json()['recipes']
+    # print(recipes)
 
     return recipes
 
@@ -57,6 +61,7 @@ def get_recipes():
 def add_recipes_to_db():
     recipes = get_recipes()
     for recipe in recipes:
+        # print(recipe)
         print(f"\033[33m█▓▒░ Adding recipe '{recipe['title']}' to DB. \033[0m")
         record = crud.create_recipe(
             recipe["title"],
@@ -70,3 +75,19 @@ def add_recipes_to_db():
 
 create_fake_users(user_data)
 add_recipes_to_db()
+
+
+def get_ingredients(ingredients):
+    api_key = os.environ.get("SPOONACULAR_API_KEY", None)
+    # print(api_key)
+    if not api_key:
+        raise Exception("API key is not found. Did you forget to export it?")
+
+    url = f"https://api.spoonacular.com/recipes/findByIngredients?apiKey={api_key}"
+    # print(url)
+    payload = {'number': 3, 'ingredients': ingredients}
+    response = requests.request("GET", url, params=payload)
+    recipes = response.json()
+
+    for recipe in recipes:
+        print(recipe['title'])

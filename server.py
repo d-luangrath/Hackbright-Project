@@ -4,6 +4,7 @@ from flask import (Flask, render_template, request, flash, session, redirect, js
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
+from random import choice
 
 app = Flask(__name__)
 app.app_context().push()
@@ -43,11 +44,10 @@ def register_user():
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
-    name = request.form.get("login-name")
     email = request.form.get("login-email")
     password = request.form.get("login-pass")
     # check if fields are not empty
-    if not name or not email or not password:
+    if not email or not password:
         flash("Please input required fields.")
         return redirect("/")
 
@@ -59,7 +59,7 @@ def process_login():
     session["user_id"] = user.user_id
     session["name"] = user.name
     session["user_email"] = user.email
-    flash(f"Welcome back, {user.name}!")
+    flash(f"Welcome back, {user.name.title()}!")
     return redirect("/mainpage")
     
 
@@ -69,12 +69,24 @@ def mainpage():
     return render_template("mainpage.html")
 
 
-@app.route("/profile")
+@app.route("/profile/<user_id>")
 def profile(user_id):
     """Show user profile."""
     user_id = session["user_id"]
     user = crud.get_user_by_id(user_id)
     return render_template("profile.html", user=user)
+
+
+# @app.route("/profile/<user_id>")
+# def greet_person(user_id):
+#     """Return customized greet pun along with person name."""
+
+    # greetings = ["smart", "clever", "tenacious", "awesome", "Pythonic"]
+    # person = request.args.get("name")
+    # greet_pun = choice(greetings)
+    # return render_template("profile.html", user=user,
+    #                        name=person,
+    #                        greetings=greet_pun)
 
 
 @app.route("/recipes")

@@ -33,7 +33,7 @@ class Recipe(db.Model):
     direction = db.Column(db.Text)
 
     user = db.relationship("User", back_populates="recipes")
-    ingredients = db.relationship("Ingredient", back_populates="recipes")
+    # ingredients = db.relationship("Ingredient", back_populates="recipes")
 
     def __repr__(self):
         return f"<Recipe recipe_name={self.recipe_name}, description={self.description}, direction={self.direction}, ingredient={self.rec_ingredient}>"
@@ -51,7 +51,7 @@ class Ingredient(db.Model):
     amount = db.Column(db.Integer)
     measurement = db.Column(db.Integer)
 
-    recipes = db.relationship("Recipe", back_populates="ingredients")
+    # recipes = db.relationship("Recipe", back_populates="ingredients")
 
     def __repr__(self):
         return f"<ingredient_name={self.ingredient_name}, details={self.details}, amount={self.amount}, measurement={self.measurement}>"

@@ -8,17 +8,17 @@
 
 <p id="summary">
     Summary: <br>
-{{ recipe.rec_ingredient }}
+{{ recipe.description|safe }}
 </p>
 
 <p id="ingredients">
     Ingredients: <br>
-{{ recipe.direction }}
+{{ recipe.rec_ingredient|safe }}
 </p>
 
 <p id="instructions">
-    Insrtructions: <br>
-{{ recipe.direction }}
+    Instructions: <br>
+{{ recipe.direction|safe }}
 </p>
 
 {% endblock %}

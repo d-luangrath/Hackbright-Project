@@ -75,5 +75,4 @@ def add_recipes_to_db():
 
 create_fake_users(user_data)
 add_recipes_to_db()
-
 get_ingredients()

@@ -1,6 +1,6 @@
 """Server for recipes app."""
-
-from flask import (Flask, render_template, request, flash, session, redirect)
+from helper import  get_ingredients
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
@@ -59,7 +59,7 @@ def process_login():
     session["user_id"] = user.user_id
     session["name"] = user.name
     session["user_email"] = user.email
-    # flash(f"Welcome back, {user.name}!")
+    flash(f"Welcome back, {user.name}!")
     return redirect("/mainpage")
     
 
@@ -69,7 +69,7 @@ def mainpage():
     return render_template("mainpage.html")
 
 
-@app.route("/mainpage/<user_id>")
+@app.route("/profile")
 def profile(user_id):
     """Show user profile."""
     user_id = session["user_id"]
@@ -90,6 +90,13 @@ def recipe(recipe_id):
     recipe = crud.get_recipe_by_id(recipe_id)
     return render_template("recipe_details.html", recipe=recipe)
 
+
+@app.route('/rec-by-ingre')
+def recipe_by_ingredient():
+
+    ingredients = request.args.get("ingredients")
+    recipes = get_ingredients(ingredients)
+    return jsonify(recipes)
 
 
 

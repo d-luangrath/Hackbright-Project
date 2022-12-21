@@ -4,16 +4,30 @@
 {% block body %}
   <h1>Nice to meat you!</h1>
 
-<div class="nav-link"
     <ul>
      <li><a href="/recipes">View all recipes</a></li>
-     <li><a href="/mainpage/<user_id>">View profile</a></li>
+     <li><a href="/profile">View profile</a></li>
     </ul>
-</div>
 
   <form id="search">
     <input type="search" id="query" name="q" placeholder="Search by ingredients">
-
-    <button>Search</button>
+    <input type="submit" value="search">
   </form>
+  <div id="search-results"></div>
+  <script>
+    let form = document.querySelector('#search').addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      let ingredients = document.querySelector('#query').value
+      const queryString = new URLSearchParams({ ingredients : ingredients }).toString();
+      const url = `/rec-by-ingre?${queryString}`;
+
+      fetch(url)
+      .then((response) => response.text())
+      .then((status) => {
+        let results = document.querySelector("#search-results")
+      results.innerHTML = status
+      });
+    });
+  </script>
+
 {% endblock %}

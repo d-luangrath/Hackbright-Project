@@ -27,13 +27,13 @@ def get_user_by_name(name):
     return User.query.filter(User.name == name).first()
 
 
-def create_recipe(title, summary, instructions, ingredients=None):
+def create_recipe(title, summary, instructions, ingredients):
     """Create and return a new recipe."""
     recipe = Recipe(
         recipe_name=title,
         description=summary,
         direction=instructions,
-        # ingredients=ingredients
+        ingredients=ingredients
     )
 
     return recipe
@@ -59,9 +59,6 @@ def get_recipe_by_direction(direction):
     return Recipe.query.get(direction)
 
 
-def get_ingredient_by_id(rec_ingredient):
-    """Return an ingredient by primary key."""
-    return Recipe.query.get(rec_ingredient)
 
 
 if __name__ == "__main__":

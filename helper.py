@@ -1,7 +1,8 @@
 from os import environ
 import requests
 
-def get_ingredients(ingredients):
+def get_recipes_by_ingredients(ingredients):
+    """Search recipes by ingredients"""
     api_key = environ.get("SPOONACULAR_API_KEY", None)
     # print(api_key)
     if not api_key:
@@ -12,8 +13,5 @@ def get_ingredients(ingredients):
     payload = {'number': 3, 'ingredients': ingredients}
     response = requests.request("GET", url, params=payload)
     recipes = response.json()
-
-    for recipe in recipes:
-        print(recipe['title'])
     
     return recipes

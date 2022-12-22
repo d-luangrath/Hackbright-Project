@@ -1,5 +1,5 @@
 """Script to seed database."""
-from helper import get_ingredients
+from helper import get_recipes_by_ingredients
 import os
 import json
 from random import choice, randint
@@ -61,19 +61,25 @@ def get_recipes():
 def add_recipes_to_db():
     recipes = get_recipes()
     for recipe in recipes:
-        # print(recipe)
+        ingredients = get_ingredients_from_recipe(recipe)
         print(f"\033[33m█▓▒░ Adding recipe '{recipe['title']}' to DB. \033[0m")
         record = crud.create_recipe(
             recipe["title"],
             recipe["summary"],
             recipe["instructions"],
-            # recipe["ingredients"]
+            ingredients
         )
 
         model.db.session.add(record)
-    
     model.db.session.commit()
+
+def get_ingredients_from_recipe(recipe):
+    ingr_html_str = ""
+    for ingredient in recipe["extendedIngredients"]:
+        ingr_html_str += ingredient["original"] + "<br>"
+    return ingr_html_str
+    
 
 create_fake_users(user_data)
 add_recipes_to_db()
-# get_ingredients(ingrs)
+# get_recipes_by_ingredients(ingredients)

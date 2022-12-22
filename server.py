@@ -1,5 +1,5 @@
 """Server for recipes app."""
-from helper import  get_ingredients
+from helper import  get_recipes_by_ingredients
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud

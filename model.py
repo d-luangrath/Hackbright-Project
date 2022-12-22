@@ -31,6 +31,7 @@ class Recipe(db.Model):
     ingredients = db.Column(db.Text)
     description = db.Column(db.Text)
     direction = db.Column(db.Text)
+    image_url = db.Column(db.String(200), nullable=True)
 
     user = db.relationship("User", back_populates="recipes")
     # ingredients = db.relationship("Ingredient", back_populates="recipes")

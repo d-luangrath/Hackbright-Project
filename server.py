@@ -103,12 +103,12 @@ def recipe(recipe_id):
     return render_template("recipe_details.html", recipe=recipe)
 
 
-@app.route('/rec-by-ingre')
-def recipe_by_ingredient():
+# @app.route('/rec-by-ingre')
+# def recipe_by_ingredient():
 
-    ingredients = request.args.get("ingredients")
-    recipes = get_ingredients(ingredients)
-    return jsonify(recipes)
+#     ingredients = request.args.get("ingredients")
+#     recipes = get_ingredients(ingredients)
+#     return jsonify(recipes)
 
 
 

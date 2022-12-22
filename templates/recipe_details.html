@@ -4,21 +4,27 @@
 
 {% block body %}
 <h1>{{ recipe.recipe_name }}</h1>
-<title>{{ recipe.recipe_name }}</title>
+
+{% if recipe.image_url %}
+    <p id="image">
+        <img src="{{ recipe.image_url }}" alt="{{ recipe.recipe_name }}">
+    </p>
+{% endif %}
 
 <p id="summary">
     Summary: <br>
-{{ recipe.description|safe }}
+    {{ recipe.description|safe }}
 </p>
 
 <p id="ingredients">
     Ingredients: <br>
-{{ recipe.ingredients|safe }}
+    {{ recipe.ingredients|safe }}
 </p>
 
 <p id="instructions">
     Instructions: <br>
-{{ recipe.direction|safe }}
+    {{ recipe.direction|safe }}
 </p>
+
 
 {% endblock %}

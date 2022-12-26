@@ -13,21 +13,8 @@
     <input type="search" id="query" name="q" placeholder="Search by ingredients">
     <input type="submit" value="search">
   </form>
-  <div id="search-results"></div>
-  <script>
-    let form = document.querySelector('#search').addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      let ingredients = document.querySelector('#query').value
-      const queryString = new URLSearchParams({ ingredients : ingredients }).toString();
-      const url = `/rec-by-ingre?${queryString}`;
 
-      fetch(url)
-      .then((response) => response.text())
-      .then((status) => {
-        let results = document.querySelector("#search-results")
-      results.innerHTML = status
-      });
-    });
-  </script>
+  <div id="search-results"></div>
+  <script src="/static/js/search.js"></script>
 
 {% endblock %}

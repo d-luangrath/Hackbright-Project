@@ -1,5 +1,5 @@
 """Server for recipes app."""
-from helper import  get_recipes_by_ingredients
+from helper import get_recipes_by_ingredients
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
@@ -109,12 +109,12 @@ def recipe(recipe_id):
     return render_template("recipe_details.html", recipe=recipe)
 
 
-# @app.route('/rec-by-ingre')
-# def recipe_by_ingredient():
+@app.route('/rec-by-ingre')
+def recipe_by_ingredient():
 
-#     ingredients = request.args.get("ingredients")
-#     recipes = get_ingredients(ingredients)
-#     return jsonify(recipes)
+    ingredients = request.args.get("ingredients")
+    recipes = get_recipes_by_ingredients(ingredients)
+    return jsonify(recipes)
 
 
 

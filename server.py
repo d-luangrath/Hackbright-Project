@@ -14,19 +14,19 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route("/")
 def homepage():
-    """View homepage."""
+    """View homepage"""
     return render_template("homepage.html")
 
 
 @app.route("/signup")
 def create_acct():
-    """View create an account for user."""
+    """View create an account for user"""
     return render_template("create_acct.html")
 
 
 @app.route("/signup", methods=["POST"])
 def register_user():
-    """Create a new user."""
+    """Create a new user"""
     name = request.form.get("name")
     email = request.form.get("email")
     password = request.form.get("password")
@@ -43,7 +43,7 @@ def register_user():
 
 @app.route("/login", methods=["POST"])
 def process_login():
-    """Process user login."""
+    """Process user login"""
     email = request.form.get("login-email")
     password = request.form.get("login-pass")
     # check if fields are not empty
@@ -65,17 +65,23 @@ def process_login():
 
 @app.route("/mainpage")
 def mainpage():
-    """Display contents on the main page."""
+    """Display contents on the main page"""
     return render_template("mainpage.html")
 
 
 @app.route("/profile/<user_id>")
 def profile(user_id):
-    """Show user profile."""
+    """Show user profile"""
     user_id = session["user_id"]
     user = crud.get_user_by_id(user_id)
     return render_template("profile.html", user=user)
 
+
+@app.route("/logout")
+def logout():
+    """Log out of user account"""
+    flash("Successfully logged out.")
+    return redirect("/")
 
 # @app.route("/profile/<user_id>")
 # def greet_person(user_id):

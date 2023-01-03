@@ -1,12 +1,16 @@
 """Script to seed database."""
-from helper import get_recipes_by_ingredients
 import os
 import json
-from random import choice, randint
+
 import crud
 import model
-import requests
 import server
+
+from random import choice, randint
+from api_handler import (
+    get_recipes_by_ingredients_from_api,
+    get_random_recipes_from_api,
+)
 
 
 model.connect_to_db(server.app)
@@ -35,23 +39,8 @@ def create_fake_users(user_data):
     model.db.session.commit()
 
 
-def get_recipes_from_api():
-    """Create recipes from APIs and store them in a dict"""
-    print("\033[36m█▓▒░ Getting recipes using API \033[0m")
-    api_key = os.environ.get("SPOONACULAR_API_KEY", None)
-    if not api_key:
-        raise Exception("API key is not found. Did you forget to 'source secrets.sh'?")
-
-    url = f"https://api.spoonacular.com/recipes/random?apiKey={api_key}"
-    payload = {'number': 3}
-
-    response = requests.request("GET", url, params=payload)
-    recipes = response.json()['recipes']
-
-    return recipes
-
-
-def add_recipes_to_db(recipes):
+def add_recipes_to_db(recipes) -> None:
+    """Add recipes to database"""
     for recipe in recipes:
         ingredients = get_ingredients_from_recipe(recipe)
         image_url = get_image_url(recipe)
@@ -62,7 +51,7 @@ def add_recipes_to_db(recipes):
             recipe["summary"],
             recipe["instructions"],
             ingredients,
-            image_url
+            image_url,
         )
 
         model.db.session.add(record)
@@ -70,6 +59,7 @@ def add_recipes_to_db(recipes):
 
 
 def get_ingredients_from_recipe(recipe):
+    """Extract ingredients element from recipe"""
     ingr_html_str = ""
     for ingredient in recipe["extendedIngredients"]:
         ingr_html_str += ingredient["original"] + "<br>"
@@ -77,6 +67,8 @@ def get_ingredients_from_recipe(recipe):
 
 
 def get_image_url(recipe):
+    """Extract image URL element from recipe"""
+
     image_url = None
     if recipe.get("image"):
         image_url = recipe["image"]
@@ -84,5 +76,11 @@ def get_image_url(recipe):
     
 
 create_fake_users(user_data)
-recipes = get_recipes_from_api()
-add_recipes_to_db(recipes)
+
+random_recipes = get_random_recipes_from_api()
+add_recipes_to_db(random_recipes)
+
+# recipes_by_ingredients = get_recipes_by_ingredients_from_api(
+#     endpoint="findByIngredients",
+#     payload={"number": 3, "ingredients": "milk"}
+# )

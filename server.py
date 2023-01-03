@@ -1,10 +1,14 @@
 """Server for recipes app."""
-from helper import get_recipes_by_ingredients
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
 from random import choice
+from api_handler import (
+    get_recipes_by_ingredients_from_api, 
+    get_recipes_by_id, 
+    get_random_recipes_from_api
+)
 
 app = Flask(__name__)
 app.app_context().push()
@@ -97,25 +101,52 @@ def logout():
 
 @app.route("/recipes")
 def all_recipes():
-    """View all recipes."""
+    """View all recipes"""
     recipes = crud.get_all_recipes()
+    if not recipes:
+        return render_template("recipe_not_found.html")
     return render_template("all_recipes.html", recipes=recipes)
 
 
 @app.route("/recipe/<recipe_id>")
 def recipe(recipe_id):
-    """View a specific recipe."""
+    """View a specific recipe"""
     recipe = crud.get_recipe_by_id(recipe_id)
+    if not recipe:
+        return render_template("recipe_not_found.html")
+    return render_template("recipe_details.html", recipe=recipe)
+
+@app.route("/recipe-api/<recipe_id>")
+def recipe_from_api_by_id(recipe_id):
+    recipe = get_recipes_by_id(recipe_id)
+
+    # import seed_database
+    # recipe["title"],
+    # recipe["summary"],
+    # recipe["instructions"],
+
+
     return render_template("recipe_details.html", recipe=recipe)
 
 
 @app.route('/rec-by-ingre')
 def recipe_by_ingredient():
-
+    """Display recipes from search query"""
     ingredients = request.args.get("ingredients")
-    recipes = get_recipes_by_ingredients(ingredients)
-    return jsonify(recipes)
+    print(f"\033[36m█▓▒░ {__name__} | {ingredients=} \033[0m")
+    recipes = get_recipes_by_ingredients_from_api(
+        endpoint="findByIngredients",
+        payload={"number": 3, "ingredients": ingredients},
+    )
 
+    recipe_names = []
+    for recipe in recipes:  
+        recipe_names.append(
+            {"name": recipe["title"], "id": recipe["id"]}
+        )
+
+    print(f"\033[36m█▓▒░ {__name__} | {recipe_names=} \033[0m")
+    return jsonify(recipe_names)
 
 
 if __name__ == "__main__":

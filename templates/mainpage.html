@@ -12,9 +12,12 @@
   <form id="search">
     <input type="search" id="query" name="q" placeholder="Search by ingredients">
     <input type="submit" value="search">
+    
+    <script src="/static/js/search.js"></script>
+    <div>  
+      <ul id="search-results"></ul>
+    </div>
   </form>
-
-  <div id="search-results"></div>
-  <script src="/static/js/search.js"></script>
+    
 
 {% endblock %}

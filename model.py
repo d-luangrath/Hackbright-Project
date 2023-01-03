@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-    """A user."""
+    """A user"""
 
     __tablename__ = "users"
 
@@ -21,7 +21,7 @@ class User(db.Model):
     
 
 class Recipe(db.Model):
-    """A recipe."""
+    """A recipe"""
 
     __tablename__ = "recipes"
 
@@ -34,28 +34,9 @@ class Recipe(db.Model):
     image_url = db.Column(db.String(200), nullable=True)
 
     user = db.relationship("User", back_populates="recipes")
-    # ingredients = db.relationship("Ingredient", back_populates="recipes")
 
     def __repr__(self):
         return f"<Recipe recipe_name={self.recipe_name}, description={self.description}, direction={self.direction}, ingredients={self.ingredients}>"
-
-
-class Ingredient(db.Model):
-    """Individual ingredient."""
-
-    __tablename__ = "ingredients"
-
-    ingredient_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"))
-    ingredient_name = db.Column(db.String(50))
-    details = db.Column(db.String(100))
-    amount = db.Column(db.Integer)
-    measurement = db.Column(db.Integer)
-
-    # recipes = db.relationship("Recipe", back_populates="ingredients")
-
-    def __repr__(self):
-        return f"<ingredient_name={self.ingredient_name}, details={self.details}, amount={self.amount}, measurement={self.measurement}>"
 
 
 #A user can have many recipes, one to many. A recipe can have many ingredients, one to many

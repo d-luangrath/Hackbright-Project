@@ -7,9 +7,17 @@ let form = document.querySelector('#search').addEventListener('submit', (evt) =>
     const url = `/rec-by-ingre?${queryString}`;
 
     fetch(url)
-    .then((response) => response.text())
-    .then((status) => {
-      let results = document.querySelector("#search-results")
-    results.innerHTML = status
+    .then((response) => response.json())
+    .then((recipes) => {
+      let searchResults = document.querySelector("#search-results")
+      
+      while (searchResults.hasChildNodes()) {
+        searchResults.removeChild(searchResults.firstElementChild);
+      }
+      
+      for (const recipe of recipes) {
+        console.log(recipe.name, recipe.id)
+        searchResults.insertAdjacentHTML("beforeend", `<li><a href="/recipe-api/${recipe.id}">${recipe.name}</li>`)
+      }
     });
   });

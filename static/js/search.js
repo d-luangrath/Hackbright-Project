@@ -16,8 +16,35 @@ let form = document.querySelector('#search').addEventListener('submit', (evt) =>
       }
       
       for (const recipe of recipes) {
-        console.log(recipe.name, recipe.id)
-        searchResults.insertAdjacentHTML("beforeend", `<li><a href="/recipe-api/${recipe.id}">${recipe.name}</li>`)
-      }
+        searchResults.insertAdjacentHTML(
+          "beforeend",
+          `<li><a href="/recipe-api/${recipe.id}">${recipe.name}</a> --- <button id="fav-btn" data-recipe-id="${recipe.id}">Favorite</button></li>`
+          )
+        }
+      });
     });
-  });
+    
+    
+// create click event target
+document.addEventListener('click', function(evt) {
+  const target = evt.target.closest('#fav-btn');
+  
+  // on CLICK target, make request to db 
+  if (target) {
+    const url = `/favorite/${target.dataset.recipeId}`;
+
+    fetch(url)
+    .then((response) => response.json())
+    .then((resp) => {
+      console.log(`${resp.status} - ${resp.msg}`);
+    });
+  }
+});
+
+
+
+
+
+
+
+// create a favorite button for random recipes

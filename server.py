@@ -2,11 +2,11 @@
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
+
 from jinja2 import StrictUndefined
-from random import choice
 from api_handler import (
     get_recipes_by_ingredients_from_api, 
-    get_recipes_by_id, 
+    get_recipe_by_id_from_api, 
     get_random_recipes_from_api
 )
 
@@ -87,21 +87,10 @@ def logout():
     flash("Successfully logged out.")
     return redirect("/")
 
-# @app.route("/profile/<user_id>")
-# def greet_person(user_id):
-#     """Return customized greet pun along with person name."""
-
-    # greetings = ["smart", "clever", "tenacious", "awesome", "Pythonic"]
-    # person = request.args.get("name")
-    # greet_pun = choice(greetings)
-    # return render_template("profile.html", user=user,
-    #                        name=person,
-    #                        greetings=greet_pun)
-
 
 @app.route("/recipes")
 def all_recipes():
-    """View all recipes"""
+    """View all random recipes"""
     recipes = crud.get_all_recipes()
     if not recipes:
         return render_template("recipe_not_found.html")
@@ -110,23 +99,24 @@ def all_recipes():
 
 @app.route("/recipe/<recipe_id>")
 def recipe(recipe_id):
-    """View a specific recipe"""
+    """View a specific recipe from random api"""
     recipe = crud.get_recipe_by_id(recipe_id)
     if not recipe:
         return render_template("recipe_not_found.html")
     return render_template("recipe_details.html", recipe=recipe)
 
-@app.route("/recipe-api/<recipe_id>")
-def recipe_from_api_by_id(recipe_id):
-    recipe = get_recipes_by_id(recipe_id)
+### EXTRACT RECIPE INFO FROM API TO DISPLAY ONTO WEB PAGE -from crud create_recipe
+# @app.route("/recipe/<recipe_id>")
+# def recipe_from_api_by_id(recipe_id):
+#     recipe = get_recipe_by_id_from_api(recipe_id)
+#     print(f"\033[32m█▓▒░ {__name__} | {recipe =} \033[0m")
+#     # import seed_database
+#     # recipe["title"],
+#     # recipe["summary"],
+#     # recipe["instructions"],
 
-    # import seed_database
-    # recipe["title"],
-    # recipe["summary"],
-    # recipe["instructions"],
 
-
-    return render_template("recipe_details.html", recipe=recipe)
+#     return render_template("recipe_details.html", recipe=recipe)
 
 
 @app.route('/rec-by-ingre')
@@ -140,6 +130,7 @@ def recipe_by_ingredient():
     )
 
     recipe_names = []
+    print(f"\033[36m█▓▒░ {__name__} | {recipes = } \033[0m")
     for recipe in recipes:  
         recipe_names.append(
             {"name": recipe["title"], "id": recipe["id"]}
@@ -147,6 +138,26 @@ def recipe_by_ingredient():
 
     print(f"\033[36m█▓▒░ {__name__} | {recipe_names=} \033[0m")
     return jsonify(recipe_names)
+
+
+@app.route('/favorite/<recipe_id>')
+def add_recipe_to_favorites(recipe_id):
+    """Add recipe to user's favorites"""
+    user_id = session["user_id"]
+
+    fav_record = crud.add_fav_recipe_to_db(user_id, recipe_id)
+
+    return jsonify(
+        {
+            "status": "Success",
+            "msg": f"Added recipe '{recipe_id}' to user's '{user_id}' favorites",
+        }
+    )
+    # return "Success"
+
+
+def func():
+    """Display favorites onto profile page, under favorite recipes"""
 
 
 if __name__ == "__main__":

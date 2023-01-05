@@ -1,5 +1,6 @@
-from model import db, User, Recipe, connect_to_db
-
+from model import db, User, Recipe, connect_to_db, Favorite
+from api_handler import get_recipe_by_id_from_api
+from utils import get_image_url, get_ingredients_from_recipe
 
 def create_user(name, email, password):
     """Create and return a new user"""
@@ -27,9 +28,10 @@ def get_user_by_name(name):
     return User.query.filter(User.name == name).first()
 
 
-def create_recipe(title, summary, instructions, ingredients, image_url):
+def create_recipe(id, title, summary, instructions, ingredients, image_url):
     """Create and return a new recipe"""
     recipe = Recipe(
+        recipe_id=id,
         recipe_name=title,
         description=summary,
         direction=instructions,
@@ -38,6 +40,35 @@ def create_recipe(title, summary, instructions, ingredients, image_url):
     )
 
     return recipe
+
+
+def add_fav_recipe_to_db(user_id, recipe_id):
+    """Add user favorite recipe to database"""
+    if not Recipe.query.get(recipe_id):
+        print(f"\033[35m█▓▒░ {__name__} | {recipe_id} is not found in DB. Creating a new record... \033[0m")
+        recipe = get_recipe_by_id_from_api(recipe_id)
+        ingredients = get_ingredients_from_recipe(recipe)
+        image_url = get_image_url(recipe)
+       
+        record = create_recipe(
+            recipe_id,
+            recipe["title"],
+            recipe["summary"],
+            recipe["instructions"],
+            ingredients,
+            image_url,
+        )
+        print(f"\033[36m█▓▒░ {__name__} | Created recipe - {record = } \033[0m")
+        db.session.add(record)
+        db.session.commit()
+    
+    # add this recipe to user favorites - create a record in table Favorites
+    favorite_record = Favorite(recipe_id=recipe_id, user_id=user_id)
+    print(f"\033[32m█▓▒░ {__name__} | {favorite_record =} \033[0m")
+    db.session.add(favorite_record)
+    db.session.commit()
+
+    return favorite_record
 
 
 def get_all_recipes():

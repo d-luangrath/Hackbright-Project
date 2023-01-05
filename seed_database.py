@@ -6,6 +6,7 @@ import crud
 import model
 import server
 
+from utils import get_image_url, get_ingredients_from_recipe
 from random import choice, randint
 from api_handler import (
     get_recipes_by_ingredients_from_api,
@@ -47,6 +48,7 @@ def add_recipes_to_db(recipes) -> None:
        
         print(f"\033[33m█▓▒░ Adding recipe '{recipe['title']}' to DB. \033[0m")
         record = crud.create_recipe(
+            recipe["id"],
             recipe["title"],
             recipe["summary"],
             recipe["instructions"],
@@ -58,27 +60,11 @@ def add_recipes_to_db(recipes) -> None:
     model.db.session.commit()
 
 
-def get_ingredients_from_recipe(recipe):
-    """Extract ingredients element from recipe"""
-    ingr_html_str = ""
-    for ingredient in recipe["extendedIngredients"]:
-        ingr_html_str += ingredient["original"] + "<br>"
-    return ingr_html_str
-
-
-def get_image_url(recipe):
-    """Extract image URL element from recipe"""
-
-    image_url = None
-    if recipe.get("image"):
-        image_url = recipe["image"]
-    return image_url
-    
-
 create_fake_users(user_data)
 
 random_recipes = get_random_recipes_from_api()
 add_recipes_to_db(random_recipes)
+crud.add_fav_recipe_to_db(1, 665257)
 
 # recipes_by_ingredients = get_recipes_by_ingredients_from_api(
 #     endpoint="findByIngredients",

@@ -3,10 +3,12 @@
 
 {% block body %}
 <h1>{{ user.name }}'s Profile</h1>
-  <ul>
-    <li>Your favorite recipes</li>
+<h2>You look radishing today!</h2>
+
+<ul>
+    <li><a href="/favorites/<recipe_id>">Your favorite recipes</a></li>
     <li>Your reviews on recipes</li>
     <li><a href="/logout">Log out</a></li>
   </ul>
-  
+
 {% endblock %}

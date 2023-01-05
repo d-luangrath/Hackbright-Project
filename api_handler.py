@@ -3,7 +3,7 @@ import requests
 import crud
 
 def get_random_recipes_from_api():
-    """Create recipes from APIs and store them in a dict"""
+    """Create random recipes from APIs and store them in a dictionary"""
     print("\033[36m█▓▒░ Getting recipes using API \033[0m")
     api_key = environ.get("SPOONACULAR_API_KEY", None)
     if not api_key:
@@ -31,26 +31,18 @@ def get_recipes_by_ingredients_from_api(endpoint: str, payload: dict):
     return recipes
 
 
-def get_recipes_by_id(id):
-    """Get recipes by ID"""
+def get_recipe_by_id_from_api(id):
+    """Get recipe by ID"""
     api_key = environ.get("SPOONACULAR_API_KEY", None)
     if not api_key:
         raise Exception("API key is not found. Did you forget to export it?")
 
     url = f"https://api.spoonacular.com/recipes/{id}/information?apiKey={api_key}"
     response = requests.request("GET", url)
-    recipes = response.json()
+    recipe = response.json()
     
-    return recipes
+    return recipe
 
-
-# def get_rec_info_by_search(ingredients):
-#     """Get recipe information from search query"""
-#     recipes = get_recipes_by_ingredients()
-    
-#     for recipe in recipes: 
-#         ingr_search_res = recipe["title"]
-#         print(ingr_search_res)
 
 
  

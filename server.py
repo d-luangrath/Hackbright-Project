@@ -145,15 +145,22 @@ def add_recipe_to_favorites(recipe_id):
     """Add recipe to user's favorites"""
     user_id = session["user_id"]
 
-    fav_record = crud.add_fav_recipe_to_db(user_id, recipe_id)
+    result = crud.add_fav_recipe_to_db(user_id, recipe_id)
 
-    return jsonify(
-        {
-            "status": "Success",
-            "msg": f"Added recipe '{recipe_id}' to user's '{user_id}' favorites",
-        }
-    )
-    # return "Success"
+    if result == "Success":
+        return jsonify(
+            {
+                "status": result,
+                "msg": f"Added recipe '{recipe_id}' to user's '{user_id}' favorites",
+            }
+        )
+    else:
+        return jsonify(
+            {
+                "status": result,
+                "msg": "Something went wrong",
+            }
+        )
 
 
 def func():

@@ -27,7 +27,7 @@ class Recipe(db.Model):
     __tablename__ = "recipes"
 
     recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    # user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     recipe_name = db.Column(db.String(200), unique=True)
     ingredients = db.Column(db.Text)
     description = db.Column(db.Text)
@@ -44,7 +44,7 @@ class Favorite(db.Model):
     """Users favorite recipe"""
 
     __tablename__ = "favorites"
-
+    __table_args__ = (db.UniqueConstraint('user_id', 'recipe_id'), )
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))

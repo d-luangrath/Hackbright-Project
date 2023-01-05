@@ -1,6 +1,7 @@
 from model import db, User, Recipe, connect_to_db, Favorite
 from api_handler import get_recipe_by_id_from_api
 from utils import get_image_url, get_ingredients_from_recipe
+from sqlalchemy.exc import IntegrityError
 
 def create_user(name, email, password):
     """Create and return a new user"""
@@ -66,9 +67,12 @@ def add_fav_recipe_to_db(user_id, recipe_id):
     favorite_record = Favorite(recipe_id=recipe_id, user_id=user_id)
     print(f"\033[32m█▓▒░ {__name__} | {favorite_record =} \033[0m")
     db.session.add(favorite_record)
-    db.session.commit()
-
-    return favorite_record
+    try:
+        db.session.commit()
+    except IntegrityError as e:
+        print(f"\033[31m█▓▒░ {__name__} | Exception was caught - {e.orig} \033[0m")
+        return "Fail"
+    return "Success"
 
 
 def get_all_recipes():

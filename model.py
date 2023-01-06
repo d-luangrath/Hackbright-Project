@@ -10,7 +10,7 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     name = db.Column(db.String(25), unique=True)
     password = db.Column(db.String(20))
@@ -26,18 +26,18 @@ class Recipe(db.Model):
 
     __tablename__ = "recipes"
 
-    recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    recipe_name = db.Column(db.String(200), unique=True)
+    title = db.Column(db.String(200), unique=True)
     ingredients = db.Column(db.Text)
-    description = db.Column(db.Text)
-    direction = db.Column(db.Text)
+    summary = db.Column(db.Text)
+    instructions = db.Column(db.Text)
     image_url = db.Column(db.String(200), nullable=True)
 
     user = db.relationship("User", secondary="favorites", back_populates="recipes")
 
     def __repr__(self):
-        return f"<Recipe recipe_name={self.recipe_name}, description={self.description}, direction={self.direction}, ingredients={self.ingredients}>"
+        return f"<Recipe title={self.title}, summary={self.summary}, instructions={self.instructions}, ingredients={self.ingredients}>"
 
 
 class Favorite(db.Model):
@@ -46,8 +46,8 @@ class Favorite(db.Model):
     __tablename__ = "favorites"
     __table_args__ = (db.UniqueConstraint('user_id', 'recipe_id'), )
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     time_created = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
     def __repr__(self):

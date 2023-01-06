@@ -8,8 +8,8 @@
   <ul>
     {% for recipe in recipes %}
       <li>
-        <a href="/recipe/{{ recipe.recipe_id }}">{{ recipe.recipe_name }}</a>
-        <button id="fav-btn" type="button" data-recipe-id="{{ recipe.recipe_id }}">Favorite</button> 
+        <a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a>
+        <button id="fav-btn" type="button" data-recipe-id="{{ recipe.id }}">Favorite</button> 
       </li>
     {% endfor %}
   </ul>

@@ -14,9 +14,9 @@ def get_user():
     return User.query.all()
 
 
-def get_user_by_id(user_id):
+def get_user_by_id(id):
     """Return a user by primary key"""
-    return User.query.get(user_id)
+    return User.query.get(id)
 
 
 def get_user_by_email(email):
@@ -32,10 +32,10 @@ def get_user_by_name(name):
 def create_recipe(id, title, summary, instructions, ingredients, image_url):
     """Create and return a new recipe"""
     recipe = Recipe(
-        recipe_id=id,
-        recipe_name=title,
-        description=summary,
-        direction=instructions,
+        id=id,
+        title=title,
+        summary=summary,
+        instructions=instructions,
         ingredients=ingredients,
         image_url=image_url,
     )
@@ -80,19 +80,19 @@ def get_all_recipes():
     return Recipe.query.all()
 
 
-def get_recipe_by_name(recipe_name):
-    """Return all recipe by name"""
-    return Recipe.query.filter(Recipe.recipe_name).all()
+def get_recipe_by_title(title):
+    """Return all recipe by title"""
+    return Recipe.query.filter(Recipe.title).all()
 
 
-def get_recipe_by_id(recipe_id):
+def get_recipe_by_id(id):
     """Return a recipe by primary key"""
-    return Recipe.query.get(recipe_id)
+    return Recipe.query.get(id)
 
 
-def get_recipe_by_direction(direction):
+def get_recipe_by_instructions(instructions):
     """Return all recipes by instructions"""
-    return Recipe.query.get(direction)
+    return Recipe.query.get(instructions)
 
 
 

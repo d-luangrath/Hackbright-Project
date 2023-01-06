@@ -7,7 +7,11 @@ from jinja2 import StrictUndefined
 from api_handler import (
     get_recipes_by_ingredients_from_api, 
     get_recipe_by_id_from_api, 
-    get_random_recipes_from_api
+    get_random_recipes_from_api,
+)
+# from utils import (
+#     get_image_url,
+#     get_ingredients_from_recipe,
 )
 
 app = Flask(__name__)
@@ -60,9 +64,9 @@ def process_login():
         flash("The email or password you entered was incorrect.")
         return redirect("/")
    
-    session["user_id"] = user.user_id
+    session["user_id"] = user.id
     session["name"] = user.name
-    session["user_email"] = user.email
+    session["email"] = user.email
     flash(f"Welcome back, {user.name.title()}!")
     return redirect("/mainpage")
     
@@ -73,11 +77,12 @@ def mainpage():
     return render_template("mainpage.html")
 
 
-@app.route("/profile/<user_id>")
-def profile(user_id):
+@app.route("/profile/")
+def profile():
     """Show user profile"""
-    user_id = session["user_id"]
-    user = crud.get_user_by_id(user_id)
+    id = session["user_id"]
+    print(f"\033[36m█▓▒░ {__name__} | {id =} \033[0m")
+    user = crud.get_user_by_id(id)
     return render_template("profile.html", user=user)
 
 
@@ -97,14 +102,32 @@ def all_recipes():
     return render_template("all_recipes.html", recipes=recipes)
 
 
-@app.route("/recipe/<recipe_id>")
-def recipe(recipe_id):
+@app.route("/recipe/<id>")
+def recipe(id):
     """View a specific recipe from random api"""
-    recipe = crud.get_recipe_by_id(recipe_id)
+    recipe = crud.get_recipe_by_id(id)
     if not recipe:
         return render_template("recipe_not_found.html")
     return render_template("recipe_details.html", recipe=recipe)
 
+
+# @app.route("/recipe/<id>")
+# def recipe_from_search_api(id):
+#     """View specific recipe from the search by ingredients api"""
+#     find_recipe = crud.get_recipe_by_id(id)
+#     ingredients = get_ingredients_from_recipe(recipe)
+#     image_url = get_image_url(recipe)
+#     if find_recipe:
+#         record = crud.create_recipe(
+#             recipe["id"],
+#             recipe["title"],
+#             recipe["summary"],
+#             recipe["instructions"],
+#             ingredients,
+#             image_url,
+#         )
+#         return record
+#     return render_template("recipe_details.html", record=record, )
 
 # @app.route("/recipe/<recipe_id>")
 # def recipe(recipe_id):
@@ -131,7 +154,7 @@ def recipe(recipe_id):
 #     # recipe["instructions"],
 
 
-    return render_template("recipe_details.html", recipe=recipe)
+    # return render_template("recipe_details.html", recipe=recipe)
 
 
 @app.route('/rec-by-ingre')
@@ -177,9 +200,6 @@ def add_recipe_to_favorites(recipe_id):
             }
         )
 
-
-def func():
-    """Display favorites onto profile page, under favorite recipes"""
 
 
 if __name__ == "__main__":

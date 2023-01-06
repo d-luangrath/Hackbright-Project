@@ -105,6 +105,21 @@ def recipe(recipe_id):
         return render_template("recipe_not_found.html")
     return render_template("recipe_details.html", recipe=recipe)
 
+
+# @app.route("/recipe/<recipe_id>")
+# def recipe(recipe_id):
+#     """View a specific recipe from random api"""
+#     recipe = crud.get_recipe_by_id(recipe_id)
+#     if not recipe:
+#         recipe = request.args.get("data")
+    
+#     if not recipe:
+#         # error message
+
+#     # if not recipe:
+#     #     return render_template("recipe_not_found.html")
+#     return render_template("recipe_details.html", recipe=recipe)
+
 ### EXTRACT RECIPE INFO FROM API TO DISPLAY ONTO WEB PAGE -from crud create_recipe
 # @app.route("/recipe/<recipe_id>")
 # def recipe_from_api_by_id(recipe_id):
@@ -116,12 +131,12 @@ def recipe(recipe_id):
 #     # recipe["instructions"],
 
 
-#     return render_template("recipe_details.html", recipe=recipe)
+    return render_template("recipe_details.html", recipe=recipe)
 
 
 @app.route('/rec-by-ingre')
 def recipe_by_ingredient():
-    """Display recipes from search query"""
+    """Display recipes title from search query"""
     ingredients = request.args.get("ingredients")
     print(f"\033[36m█▓▒░ {__name__} | {ingredients=} \033[0m")
     recipes = get_recipes_by_ingredients_from_api(

@@ -18,7 +18,7 @@ let form = document.querySelector('#search').addEventListener('submit', (evt) =>
     for (const recipe of recipes) {
       searchResults.insertAdjacentHTML(
         "beforeend",
-        `<li><a href="/recipe-api/${recipe.id}">${recipe.name}</a> ---
+        `<li><a href="/recipe/${recipe.id}">${recipe.name}</a> ---
         <button id="fav-btn" data-recipe-id="${recipe.id}">Favorite</button></li>`
         )
       }

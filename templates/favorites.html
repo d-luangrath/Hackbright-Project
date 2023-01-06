@@ -5,8 +5,16 @@
 <h1>Favorite Recipes</h1>
 <h2>In pizza we crust</h2>
 
-<ul>
-    <li>${recipe.id}</li>
-</ul>
+<div>
+  <ul>
+    <li>${recipe.title}
+        {% if recipe.image_url %}
+        <p id="image">
+          <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+        </p>
+        {% endif %}
+    </li>
+  </ul>
+</div>
 
 {% endblock %}

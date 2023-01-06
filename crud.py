@@ -43,6 +43,26 @@ def create_recipe(id, title, summary, instructions, ingredients, image_url):
     return recipe
 
 
+def add_recipes_to_db(recipes: list) -> None:
+    """Add recipes to database"""
+    for recipe in recipes:
+        ingredients = get_ingredients_from_recipe(recipe)
+        image_url = get_image_url(recipe)
+       
+        print(f"\033[33m█▓▒░ Adding recipe '{recipe['title']}' to DB. \033[0m")
+        record = create_recipe(
+            recipe["id"],
+            recipe["title"],
+            recipe["summary"],
+            recipe["instructions"],
+            ingredients,
+            image_url,
+        )
+
+        db.session.add(record)
+    db.session.commit()
+
+
 def add_fav_recipe_to_db(user_id, recipe_id):
     """Add user favorite recipe to database"""
     if not Recipe.query.get(recipe_id):

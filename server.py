@@ -9,10 +9,6 @@ from api_handler import (
     get_recipe_by_id_from_api, 
     get_random_recipes_from_api,
 )
-# from utils import (
-#     get_image_url,
-#     get_ingredients_from_recipe,
-)
 
 app = Flask(__name__)
 app.app_context().push()
@@ -102,59 +98,29 @@ def all_recipes():
     return render_template("all_recipes.html", recipes=recipes)
 
 
-@app.route("/recipe/<id>")
-def recipe(id):
-    """View a specific recipe from random api"""
-    recipe = crud.get_recipe_by_id(id)
-    if not recipe:
-        return render_template("recipe_not_found.html")
-    return render_template("recipe_details.html", recipe=recipe)
-
-
 # @app.route("/recipe/<id>")
-# def recipe_from_search_api(id):
-#     """View specific recipe from the search by ingredients api"""
-#     find_recipe = crud.get_recipe_by_id(id)
-#     ingredients = get_ingredients_from_recipe(recipe)
-#     image_url = get_image_url(recipe)
-#     if find_recipe:
-#         record = crud.create_recipe(
-#             recipe["id"],
-#             recipe["title"],
-#             recipe["summary"],
-#             recipe["instructions"],
-#             ingredients,
-#             image_url,
-#         )
-#         return record
-#     return render_template("recipe_details.html", record=record, )
-
-# @app.route("/recipe/<recipe_id>")
-# def recipe(recipe_id):
+# def recipe(id):
 #     """View a specific recipe from random api"""
-#     recipe = crud.get_recipe_by_id(recipe_id)
+#     recipe = crud.get_recipe_by_id(id)
 #     if not recipe:
-#         recipe = request.args.get("data")
-    
-#     if not recipe:
-#         # error message
-
-#     # if not recipe:
-#     #     return render_template("recipe_not_found.html")
+#         return render_template("recipe_not_found.html")
 #     return render_template("recipe_details.html", recipe=recipe)
 
-### EXTRACT RECIPE INFO FROM API TO DISPLAY ONTO WEB PAGE -from crud create_recipe
-# @app.route("/recipe/<recipe_id>")
-# def recipe_from_api_by_id(recipe_id):
-#     recipe = get_recipe_by_id_from_api(recipe_id)
-#     print(f"\033[32m█▓▒░ {__name__} | {recipe =} \033[0m")
-#     # import seed_database
-#     # recipe["title"],
-#     # recipe["summary"],
-#     # recipe["instructions"],
 
+@app.route("/recipe/<id>")
+def recipe_from_search_api(id):
+    """View specific recipe from the search by ingredients api"""
+    recipe_from_db = crud.get_recipe_by_id(id)  # check if recipe is in DB
+    
+    # if it was not found in DB (recipe == None), try to get recipe from API
+    # and save to DB so we can reuse it later and save an API call
+    if not recipe_from_db:
+        recipe_from_api = get_recipe_by_id_from_api(id)
+        crud.add_recipes_to_db([recipe_from_api])
 
-    # return render_template("recipe_details.html", recipe=recipe)
+    recipe_from_db = crud.get_recipe_by_id(id)  # check again if recipe is in DB cuz we just saved it to db
+
+    return render_template("recipe_details.html", recipe=recipe_from_db)
 
 
 @app.route('/rec-by-ingre')
@@ -169,7 +135,7 @@ def recipe_by_ingredient():
 
     recipe_names = []
     print(f"\033[36m█▓▒░ {__name__} | {recipes = } \033[0m")
-    for recipe in recipes:  
+    for recipe in recipes:
         recipe_names.append(
             {"name": recipe["title"], "id": recipe["id"]}
         )

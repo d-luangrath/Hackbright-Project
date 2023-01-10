@@ -1,6 +1,5 @@
 from os import environ
 import requests
-import crud
 
 def get_random_recipes_from_api():
     """Create random recipes from APIs and store them in a dictionary"""

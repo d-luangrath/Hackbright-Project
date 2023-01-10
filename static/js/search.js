@@ -24,5 +24,3 @@ let form = document.querySelector('#search').addEventListener('submit', (evt) =>
       }
   });
 });
-// to use for extracting data
-// `<li><a href="/recipe/${recipe.id}" data=${recipe} >${recipe.name}</a>

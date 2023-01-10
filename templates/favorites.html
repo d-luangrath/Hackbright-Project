@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}{{ user.name }}'s Favorite recipes{% endblock %}
+{% block title %}{{ user_name }}'s Favorite recipes{% endblock %}
 
 {% block body %}
 <h1>Favorite Recipes</h1>
 <h2>In pizza we crust</h2>
 
 <div>
+  {% for recipe in recipe_records %}
+  <li>
+    <a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a>
+  </li>
+  {% endfor %}  
   <ul>
-    <li>${recipe.title}
-        {% if recipe.image_url %}
-        <p id="image">
-          <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-        </p>
-        {% endif %}
-    </li>
+  
   </ul>
 </div>
 

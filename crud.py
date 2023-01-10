@@ -2,6 +2,7 @@ from model import db, User, Recipe, connect_to_db, Favorite
 from api_handler import get_recipe_by_id_from_api
 from utils import get_image_url, get_ingredients_from_recipe
 from sqlalchemy.exc import IntegrityError
+from flask import session
 
 def create_user(name, email, password):
     """Create and return a new user"""
@@ -95,6 +96,13 @@ def add_fav_recipe_to_db(user_id, recipe_id):
     return "Success"
 
 
+def unfavorite_recipe_from_db(user_id, recipe_id):
+    """Remove a recipe that the user unfavorites"""
+    del_fav = db.session.query(Favorite).filter(Favorite.user_id == user_id, Favorite.recipe_id == recipe_id).first()
+    db.session.delete(del_fav)
+    db.session.commit()
+
+
 def get_all_recipes():
     """Return all recipes"""
     return Recipe.query.all()
@@ -114,6 +122,15 @@ def get_recipe_by_instructions(instructions):
     """Return all recipes by instructions"""
     return Recipe.query.get(instructions)
 
+
+def get_favorite_recipe_ids_for_user(user_id):
+    """Return favorite recipe ids for a user"""
+    rows = Favorite.query.filter(Favorite.user_id == user_id).all()
+    recipe_ids = []
+    if rows:
+        for record in rows:
+            recipe_ids.append(record.recipe_id)
+    return recipe_ids
 
 
 if __name__ == "__main__":

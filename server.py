@@ -91,25 +91,16 @@ def logout():
 
 @app.route("/recipes")
 def all_recipes():
-    """View all random recipes"""
+    """View all random recipes as a list"""
     recipes = crud.get_all_recipes()
     if not recipes:
         return render_template("recipe_not_found.html")
     return render_template("all_recipes.html", recipes=recipes)
 
 
-# @app.route("/recipe/<id>")
-# def recipe(id):
-#     """View a specific recipe from random api"""
-#     recipe = crud.get_recipe_by_id(id)
-#     if not recipe:
-#         return render_template("recipe_not_found.html")
-#     return render_template("recipe_details.html", recipe=recipe)
-
-
 @app.route("/recipe/<id>")
 def recipe_from_search_api(id):
-    """View specific recipe from the search by ingredients api"""
+    """View a specific recipe from the search api an random recipes list"""
     recipe_from_db = crud.get_recipe_by_id(id)  # check if recipe is in DB
     
     # if it was not found in DB (recipe == None), try to get recipe from API
@@ -144,7 +135,7 @@ def recipe_by_ingredient():
     return jsonify(recipe_names)
 
 
-@app.route('/favorite/<recipe_id>')
+@app.route('/favorites/<recipe_id>')
 def add_recipe_to_favorites(recipe_id):
     """Add recipe to user's favorites"""
     user_id = session["user_id"]
@@ -166,6 +157,32 @@ def add_recipe_to_favorites(recipe_id):
             }
         )
 
+
+@app.route('/unfavorite/<recipe_id>')
+def unvaforite(recipe_id):
+    user_id = session["user_id"]
+    crud.unfavorite_recipe_from_db(user_id=user_id, recipe_id=recipe_id)
+
+    return jsonify(
+        {"status": "Success",
+        "msg": f"Removed recipe '{recipe_id}' from user's '{user_id}' favorites",}
+    )
+
+
+@app.route('/favorites')
+def show_fav_recipes():
+    """Disply user's favorited recipes to their profile"""
+    user_id = session["user_id"]
+    user_name = session["name"]
+    recipe_ids = crud.get_favorite_recipe_ids_for_user(user_id)
+
+    # get recipe records from Recipes by using recipe ids
+    recipe_recs = []
+    
+    for id in recipe_ids:
+        recipe_recs.append(crud.get_recipe_by_id(id))
+
+    return render_template("favorites.html", user_name=user_name, recipe_records=recipe_recs)
 
 
 if __name__ == "__main__":

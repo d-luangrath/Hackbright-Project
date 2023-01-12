@@ -6,7 +6,7 @@ import crud
 import model
 import server
 
-from crud import add_recipes_to_db
+from crud import add_recipes_to_db, add_review_to_db
 from random import choice, randint
 from api_handler import get_random_recipes_from_api
 
@@ -40,3 +40,4 @@ create_fake_users(user_data)
 random_recipes = get_random_recipes_from_api()
 add_recipes_to_db(random_recipes)
 crud.add_fav_recipe_to_db(1, 665257)
+crud.add_review_to_db(1, 665257)

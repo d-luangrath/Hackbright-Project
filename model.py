@@ -53,6 +53,22 @@ class Favorite(db.Model):
     def __repr__(self):
         return f"<Favorite id={self.id}, recipe_id={self.recipe_id}, user_id={self.user_id}, time_created={self.time_created}>"
 
+
+class Review(db.Model):
+    """Reviews on a recipe by a user"""
+
+    __tablename__ = "reviews"
+    __table_args__ = (db.UniqueConstraint('user_id', 'recipe_id'), )
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    review = db.Column(db.Text)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    time_created = db.Column(db.DateTime, default=datetime.now, nullable=False)
+
+def __repr__(self):
+        return f"<Review id={self.id}, review={self.review} recipe_id={self.recipe_id}, user_id={self.user_id}, time_created={self.time_created}>"
+
+
 #A user can have many recipes, one to many. A recipe can have many ingredients, one to many
 
 # user => recipes => ingredients

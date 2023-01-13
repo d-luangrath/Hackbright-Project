@@ -1,4 +1,4 @@
-from model import db, User, Recipe, connect_to_db, Favorite
+from model import db, User, Recipe, Review, connect_to_db, Favorite
 from api_handler import get_recipe_by_id_from_api
 from utils import get_image_url, get_ingredients_from_recipe
 from sqlalchemy.exc import IntegrityError
@@ -103,6 +103,19 @@ def unfavorite_recipe_from_db(user_id, recipe_id):
     db.session.commit()
 
 
+def add_review_to_db(user_id, recipe_id, review_text):
+    """Add a user's review to database"""
+    # add this review to user reviews - create a record in table Reviews
+    review = Review.query.filter_by(user_id=user_id,recipe_id=recipe_id).first()
+    if review:
+        db.session.delete(review)
+        db.session.commit()
+
+    review_record = Review(recipe_id=recipe_id, user_id=user_id, review=review_text)
+    db.session.add(review_record)
+    db.session.commit()
+
+
 def get_all_recipes():
     """Return all recipes"""
     return Recipe.query.all()
@@ -131,6 +144,22 @@ def get_favorite_recipe_ids_for_user(user_id):
         for record in rows:
             recipe_ids.append(record.recipe_id)
     return recipe_ids
+
+
+def get_review_recipe_ids_for_user(user_id):
+    """Return review ids for a user"""
+    rows = Review.query.filter(Review.user_id == user_id).all()
+    recipe_ids = []
+    if rows:
+        for record in rows:
+            recipe_ids.append(record.recipe_id)
+    return recipe_ids
+
+
+def get_all_reviews_for_user(user_id):
+    """Return review ids for a user"""
+    reviews = Review.query.filter(Review.user_id == user_id).all()
+    return reviews
 
 
 if __name__ == "__main__":

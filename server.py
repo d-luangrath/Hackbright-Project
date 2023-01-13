@@ -22,13 +22,13 @@ def homepage():
     return render_template("homepage.html")
 
 
-@app.route("/signup")
+@app.route("/register")
 def create_acct():
     """View create an account for user"""
     return render_template("create_acct.html")
 
 
-@app.route("/signup", methods=["POST"])
+@app.route("/register", methods=["POST"])
 def register_user():
     """Create a new user"""
     name = request.form.get("name")
@@ -63,7 +63,6 @@ def process_login():
     session["user_id"] = user.id
     session["name"] = user.name
     session["email"] = user.email
-    flash(f"Welcome back, {user.name.title()}!")
     return redirect("/mainpage")
     
 
@@ -114,6 +113,31 @@ def recipe_from_search_api(id):
     return render_template("recipe_details.html", recipe=recipe_from_db)
 
 
+@app.route("/review/<recipe_id>", methods=["POST"])
+def post_reviews(recipe_id):
+    """Add a user's review to Review table in DB"""
+    user_id = session["user_id"]
+    review = request.form.get("review")
+    result = crud.add_review_to_db(user_id, recipe_id, review)
+    # return f"Thanks for your review!"
+    return ""
+
+
+@app.route("/reviews")
+def show_user_reviews():
+    """Display all user's reviews on their profile"""
+    user_id = session["user_id"]
+    user_name = session["name"]
+    
+    recipe_reviews = []
+    reviews = crud.get_all_reviews_for_user(user_id)
+    for review in reviews:
+        recipe_rec = crud.get_recipe_by_id(review.recipe_id)
+        recipe_reviews.append([recipe_rec.title, review.review, review.time_created])
+
+    return render_template("reviews.html", user_name=user_name, recipe_reviews=recipe_reviews)
+
+    
 @app.route('/rec-by-ingre')
 def recipe_by_ingredient():
     """Display recipes title from search query"""
@@ -159,7 +183,7 @@ def add_recipe_to_favorites(recipe_id):
 
 
 @app.route('/unfavorite/<recipe_id>')
-def unvaforite(recipe_id):
+def unfavorite(recipe_id):
     user_id = session["user_id"]
     crud.unfavorite_recipe_from_db(user_id=user_id, recipe_id=recipe_id)
 

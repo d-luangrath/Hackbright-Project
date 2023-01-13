@@ -65,8 +65,8 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     time_created = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
-def __repr__(self):
-        return f"<Review id={self.id}, review={self.review} recipe_id={self.recipe_id}, user_id={self.user_id}, time_created={self.time_created}>"
+    def __repr__(self):
+        return f"<Review id={self.id}, review={self.review[:100]} recipe_id={self.recipe_id}, user_id={self.user_id}, time_created={self.time_created}>"
 
 
 #A user can have many recipes, one to many. A recipe can have many ingredients, one to many

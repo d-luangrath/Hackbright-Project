@@ -115,6 +115,8 @@ def add_review_to_db(user_id, recipe_id, review_text):
     db.session.add(review_record)
     db.session.commit()
 
+    return review_record
+
 
 def get_all_recipes():
     """Return all recipes"""

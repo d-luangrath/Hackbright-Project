@@ -119,9 +119,11 @@ def post_reviews(recipe_id):
     user_id = session["user_id"]
     review = request.form.get("review")
     result = crud.add_review_to_db(user_id, recipe_id, review)
-    # return f"Thanks for your review!"
-    return ""
-
+    print(f"\033[32m█▓▒░ Added review for {result.recipe_id} \033[0m")
+    return jsonify ({
+        "success": True,
+        "status": f"Thank you for your review"})
+    
 
 @app.route("/reviews")
 def show_user_reviews():

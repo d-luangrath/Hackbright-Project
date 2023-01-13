@@ -3,7 +3,16 @@
 {% block title %}{{ recipe.title }} - Details{% endblock %}
 
 {% block body %}
-<h1>{{ recipe.title }}</h1>
+    <h1>{{ recipe.title }}</h1>
+    
+    <form id="review-form">
+        <input type="text" name="review" id="reviews" recipeid="{{recipe.id}}" placeholder="Please leave your reviews/comments here!">
+        <input type="submit" id="submit-reviews" value="Submit">
+        <label for="submit" id="my-label"></label>
+        
+        <script src="/static/js/reviews.js"></script>
+    </form>
+
 
 {% if recipe.image_url %}
     <p id="image">
@@ -25,11 +34,6 @@
     Instructions: <br>
     {{ recipe.instructions|safe }}
 </p>
-
-<form action="/review/{{ recipe.id }}" method="POST">
-    <input type="text" name="review" id="reviews" placeholder="Please leave your reviews/comments here!">
-    <button type="submit" id="submit-reviews">Submit</button>
-</form>
 
 
 {% endblock %}

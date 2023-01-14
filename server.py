@@ -117,12 +117,12 @@ def recipe_from_search_api(id):
 def post_reviews(recipe_id):
     """Add a user's review to Review table in DB"""
     user_id = session["user_id"]
-    review = request.form.get("review")
+    review = request.json.get("review")
     result = crud.add_review_to_db(user_id, recipe_id, review)
     print(f"\033[32m█▓▒░ Added review for {result.recipe_id} \033[0m")
     return jsonify ({
         "success": True,
-        "status": f"Thank you for your review"})
+        "status": "Thank you for your review"})
     
 
 @app.route("/reviews")

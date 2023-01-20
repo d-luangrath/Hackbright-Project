@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
+{% include 'navbar.html' %}
+
 {% block title %}{% endblock %}
 
 {% block body %}
+
 <h1> Your reviews</h1>
 
-<div>
+<div class="user-reviews">
   {% for review in recipe_reviews %}
     <p>Title: {{ review[0] }}</p>
     <p>Review: {{ review[1] }}</p>
     <p>Added on: {{ review[2] }}</p>
   {% endfor %}
-</div>
-
-
-
-
+</div> 
 
 {% endblock %}

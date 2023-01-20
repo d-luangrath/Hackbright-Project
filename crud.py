@@ -4,6 +4,7 @@ from utils import get_image_url, get_ingredients_from_recipe
 from sqlalchemy.exc import IntegrityError
 from flask import session
 
+
 def create_user(name, email, password):
     """Create and return a new user"""
     user = User(name=name, email=email, password=password)
@@ -90,10 +91,10 @@ def add_fav_recipe_to_db(user_id, recipe_id):
     db.session.add(favorite_record)
     try:
         db.session.commit()
+        return "Success"
     except IntegrityError as e:
         print(f"\033[31m█▓▒░ {__name__} | Exception was caught - {e.orig} \033[0m")
         return "Fail"
-    return "Success"
 
 
 def unfavorite_recipe_from_db(user_id, recipe_id):

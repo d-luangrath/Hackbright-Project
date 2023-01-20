@@ -1,6 +1,6 @@
 'use strict';
 
-let form = document.querySelector('#search').addEventListener('submit', (evt) => {
+let form = document.querySelector('#search').addEventListener("submit", (evt) => {
   evt.preventDefault();
   let ingredients = document.querySelector('#query').value
   const queryString = new URLSearchParams({ ingredients : ingredients }).toString();

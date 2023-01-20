@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% include 'navbar.html' %}
 
 {% block title %}{{ recipe.title }} - Details{% endblock %}
 
 {% block body %}
+
     <h1>{{ recipe.title }}</h1>
     
     <form id="review-form">

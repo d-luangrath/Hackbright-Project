@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}{{ user.name }}'s Profile{% endblock %}
+{% include 'navbar.html' %}
+
+{% block title %}Profile{% endblock %}
 
 {% block body %}
-<h1>{{ user.name }}'s Profile</h1>
-<h2>You look radishing today!</h2>
 
 <ul>
     <li><a href="/favorites">Your favorite recipes</a></li>
     <li><a href="/reviews">Your reviews on recipes</a></li>
-    <li><a href="/logout">Log out</a></li>
   </ul>
 
 {% endblock %}
+
+

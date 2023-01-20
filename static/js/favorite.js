@@ -2,7 +2,6 @@
 
 // create click event target
 document.addEventListener('click', (evt) => {
-  console.log("=== EVENT on click ===");
   const favBtn = evt.target.closest('#fav-btn');
 
   // on CLICK target, make request to db 

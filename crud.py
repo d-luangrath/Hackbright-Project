@@ -91,10 +91,17 @@ def add_fav_recipe_to_db(user_id, recipe_id):
     db.session.add(favorite_record)
     try:
         db.session.commit()
-        return "Success"
+        # return "Success"
+        return {
+            "status": "Success",
+            "msg": f"Added recipe '{recipe_id}' to user's '{user_id}' favorites",
+        }
     except IntegrityError as e:
         print(f"\033[31m█▓▒░ {__name__} | Exception was caught - {e.orig} \033[0m")
-        return "Fail"
+        return {
+            "status": "Fail",
+            "msg": f"Detail: {e.orig}",
+        }
 
 
 def unfavorite_recipe_from_db(user_id, recipe_id):

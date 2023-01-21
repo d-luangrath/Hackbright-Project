@@ -8,11 +8,32 @@
 <h1> Your reviews</h1>
 
 <div class="user-reviews">
-  {% for review in recipe_reviews %}
+  <div class="accordion" id="accordionExample">
+    {% for review in recipe_reviews %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{review[0]}}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{review[0]}}" 
+                  aria-expanded="false" aria-controls="collapse{{review[0]}}">
+                  <p>{{ review[1] }}</p>
+                </button>
+        </h2>
+        <div id="collapse{{review[0]}}" class="accordion-collapse collapse" aria-labelledby="heading{{review[0]}}" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>Review: {{ review[2] }}</strong>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div> 
+
+{% endblock %}
+
+
+
+<!-- ??? -->
+  <!-- {% for review in recipe_reviews %}
     <p>Title: {{ review[0] }}</p>
     <p>Review: {{ review[1] }}</p>
     <p>Added on: {{ review[2] }}</p>
-  {% endfor %}
-</div> 
-
-{% endblock %}
+  {% endfor %} -->

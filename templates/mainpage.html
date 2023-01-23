@@ -5,7 +5,19 @@
 
 {% block body %}
 <h1> Welcome, {{ session['name'] }}.</h1>
-<p> Lettuce turnip the beet!</p>
+
+  <form class="form-inline" id="search">
+    <input class="form-control mr-sm-2" type="search" id="query" name="q" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <script src="/static/js/search.js"></script>
+  </form>
+
+  <div>  
+    <ul id="search-results"></ul>
+  </div>
+  
+  <script src="/static/js/favorite.js"></script>
+
 
 {% endblock %}
 

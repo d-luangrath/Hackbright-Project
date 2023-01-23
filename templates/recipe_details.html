@@ -15,27 +15,26 @@
         <script src="/static/js/reviews.js"></script>
     </form>
 
+    {% if recipe.image_url %}
+        <p id="image">
+            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+        </p>
+    {% endif %}
 
-{% if recipe.image_url %}
-    <p id="image">
-        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
+    <p id="summary">
+        Summary: <br>
+        {{ recipe.summary|safe }}
     </p>
-{% endif %}
 
-<p id="summary">
-    Summary: <br>
-    {{ recipe.summary|safe }}
-</p>
+    <p id="ingredients">
+        Ingredients: <br>
+        {{ recipe.ingredients|safe }}
+    </p>
 
-<p id="ingredients">
-    Ingredients: <br>
-    {{ recipe.ingredients|safe }}
-</p>
-
-<p id="instructions">
-    Instructions: <br>
-    {{ recipe.instructions|safe }}
-</p>
+    <p id="instructions">
+        Instructions: <br>
+        {{ recipe.instructions|safe }}
+    </p>
 
 
 {% endblock %}

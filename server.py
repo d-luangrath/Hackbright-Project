@@ -38,12 +38,14 @@ def register_user():
     password = request.form.get("password")
     user = crud.get_user_by_email(email)
     if user:
-        flash("An account with that email already exists. Try again.")
+        flash("An account with that email already exists. Try again.", "--bs-danger")
+    elif not all((name, email, password)):
+        flash("Input fields cannot be empty. Try again.", "--bs-danger")
     else:
         user = crud.create_user(name, email, password)
         db.session.add(user)
         db.session.commit()
-        flash("Account created! Please log in.")
+        flash("Account created! Please log in.", "--bs-success")
     return redirect("/")
 
 
@@ -54,12 +56,12 @@ def process_login():
     password = request.form.get("login-pass")
     # check if fields are not empty
     if not email or not password:
-        flash("Please input required fields.")
+        flash("Please input required fields.", "--bs-danger")
         return redirect("/")
 
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
-        flash("The email or password you entered was incorrect.")
+        flash("The email or password you entered was incorrect.", "--bs-danger")
         return redirect("/")
    
     session["user_id"] = user.id
@@ -86,7 +88,7 @@ def profile():
 @app.route("/logout")
 def logout():
     """Log out of user account"""
-    flash("Successfully logged out.")
+    flash("Successfully logged out.", "--bs-success")
     return redirect("/")
 
 

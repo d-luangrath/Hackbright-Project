@@ -4,26 +4,28 @@
 {% block title %}Main page{% endblock %}
 
 {% block body %}
-<h1> Welcome, {{ session['name'] }}.</h1>
+<div class="heading-1 d-flex justify-content-center">
+  <h1> Welcome, {{ session['name'] }}.</h1>
+</div>
 
-<div class="row w-50">
-  <div class="col-10">
-    <form class="form-inline" id="search">
-      <input class="form-control mr-sm-2" type="search" id="query" name="q" placeholder="Search by ingredients" aria-label="Search">
-    </div>
-    <div class="col-1">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </div>
-      <script src="/static/js/search.js"></script>
-    </form>
+<div class="container d-flex justify-content-center">
+  <div class="row w-50">
+    <div class="col-10">
+      <form class="form-inline" id="search">
+        <input class="form-control mr-sm-2" type="search" id="query" name="q" placeholder="Search by ingredients" aria-label="Search">
+      </div>
+      <div class="col-1">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </div>
+        <script src="/static/js/search.js"></script>
+      </form>
+  </div>
 </div>
   
 <div id="results">
-  <div class="container py-5">
     <div class="row justify-content-center" id="search-results">
       <!-- will be added by JS script -->
     </div>
-  </div>
 </div>
 
   <script src="/static/js/favorite.js"></script>

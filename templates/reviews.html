@@ -4,11 +4,13 @@
 {% block title %}{% endblock %}
 
 {% block body %}
+<div class="heading-1 d-flex justify-content-center">
+  <h1> Your reviews</h1>  
+</div>
 
-<h1> Your reviews</h1>
-
-<div class="user-reviews">
-  <div class="accordion" id="accordionExample">
+<div class="container">
+<div class="user-reviews d-flex justify-content-center">
+  <div class="accordion w-75" id="accordionExample">
     {% for review in recipe_reviews %}
       <div class="accordion-item">
         <h2 class="accordion-header" id="heading{{review[0]}}">
@@ -26,7 +28,7 @@
       {% endfor %}
     </div>
   </div> 
-
+</div>
 {% endblock %}
 
 

@@ -3,18 +3,19 @@
 {% block title %}{{ user_name }}'s Favorite recipes{% endblock %}
 
 {% block body %}
+<div class="heading-1 d-flex justify-content-center">
 <h1>Favorite Recipes</h1>
+</div>
 
+<div class="container">
 <!-- Cloudflare -->
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'>
 
-<div id="fav-recipes">
-  <div id="random-recipes">
-    <div class="container py-5">
+  <div id="fav-recipes">
+    <div id="random-recipes">
       <div class="row justify-content-center">
         {% for recipe in recipe_records %}
         {% if recipe.image_url %}
-        
         <div class="col-12 col-lg-4">
           <div class="card text-center mb-3 box-shadow mx-auto my-5" style="width: 25rem;">
             <img src="{{recipe.image_url}}" class="card-img-top">
@@ -26,7 +27,7 @@
         {% endif %} 
         {% endfor %}
     </div>
-  </div>
+ </div>
 </div>
   
 <!-- Bootstrap 5 JS -->

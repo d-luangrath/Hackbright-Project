@@ -11,16 +11,25 @@ let form = document.querySelector('#search').addEventListener("submit", (evt) =>
   .then((recipes) => {
     let searchResults = document.querySelector("#search-results")
     
-    while (searchResults.hasChildNodes()) {
-      searchResults.removeChild(searchResults.firstElementChild);
+    // remove all divs with id search-results
+    while (searchResults.firstChild) {
+      searchResults.firstChild.remove();
     }
     
     for (const recipe of recipes) {
-      searchResults.insertAdjacentHTML(
-        "beforeend",
-        `<li><a href="/recipe/${recipe.id}">${recipe.name}</a> ---
-        <button id="fav-btn" data-recipe-id="${recipe.id}">Favorite</button></li>`
-        )
+        searchResults.insertAdjacentHTML(
+          "beforeend",
+          `<div class="col-12 col-lg-4">
+          <div class="card h-80 text-center box-shadow mb-3 mx-auto my-5" style="width: 25rem;">
+            <img src="${recipe.image_url}" class="card-img-top">
+            <div class="card-body">
+              <a class="card-title" href="/recipe/${recipe.id}">${recipe.title}</a>
+              <hr>
+              <button class="btn btn-primary" id="fav-btn" type="button" data-recipe-id="${recipe.id}">Favorite</button>
+            </div>
+          </div>
+        </div>`
+          )
       }
   });
 });

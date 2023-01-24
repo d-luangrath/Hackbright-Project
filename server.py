@@ -1,7 +1,9 @@
 """Server for recipes app."""
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
+from datetime import datetime
 import crud
+
 
 from jinja2 import StrictUndefined
 from api_handler import (
@@ -134,8 +136,9 @@ def show_user_reviews():
     recipe_reviews = []
     reviews = crud.get_all_reviews_for_user(user_id)
     for review in reviews:
+        date_time = review.time_created.strftime("%x")
         recipe_rec = crud.get_recipe_by_id(review.recipe_id)
-        recipe_reviews.append([recipe_rec.id, recipe_rec.title, review.review, review.time_created])
+        recipe_reviews.append([recipe_rec.id, recipe_rec.title, review.review, date_time])
 
     return render_template("reviews.html", user_name=user_name, recipe_reviews=recipe_reviews)
 

@@ -21,7 +21,8 @@
         </h2>
         <div id="collapse{{review[0]}}" class="accordion-collapse collapse" aria-labelledby="heading{{review[0]}}" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <strong>Review: {{ review[2] }}</strong>
+            <strong>{{ review[2] }}</strong>
+            <p>Review added on: {{ review[3] }}</p>
           </div>
         </div>
       </div>
@@ -30,12 +31,3 @@
   </div> 
 </div>
 {% endblock %}
-
-
-
-<!-- ??? -->
-  <!-- {% for review in recipe_reviews %}
-    <p>Title: {{ review[0] }}</p>
-    <p>Review: {{ review[1] }}</p>
-    <p>Added on: {{ review[2] }}</p>
-  {% endfor %} -->

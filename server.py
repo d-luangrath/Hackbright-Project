@@ -153,8 +153,10 @@ def recipe_by_ingredient():
     recipe_names = []
     print(f"\033[36m█▓▒░ {__name__} | {recipes = } \033[0m")
     for recipe in recipes:
+        from crud import get_image_url
+        image_url = get_image_url(recipe)
         recipe_names.append(
-            {"name": recipe["title"], "id": recipe["id"]}
+            {"title": recipe["title"], "id": recipe["id"], "image_url": image_url}
         )
 
     print(f"\033[36m█▓▒░ {__name__} | {recipe_names=} \033[0m")

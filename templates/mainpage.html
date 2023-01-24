@@ -6,39 +6,27 @@
 {% block body %}
 <h1> Welcome, {{ session['name'] }}.</h1>
 
-  <form class="form-inline" id="search">
-    <input class="form-control mr-sm-2" type="search" id="query" name="q" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    <script src="/static/js/search.js"></script>
-  </form>
-
-  <div>  
-    <ul id="search-results"></ul>
-  </div>
+<div class="row w-50">
+  <div class="col-10">
+    <form class="form-inline" id="search">
+      <input class="form-control mr-sm-2" type="search" id="query" name="q" placeholder="Search by ingredients" aria-label="Search">
+    </div>
+    <div class="col-1">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </div>
+      <script src="/static/js/search.js"></script>
+    </form>
+</div>
   
+<div id="results">
+  <div class="container py-5">
+    <div class="row justify-content-center" id="search-results">
+      <!-- will be added by JS script -->
+    </div>
+  </div>
+</div>
+
   <script src="/static/js/favorite.js"></script>
 
 
 {% endblock %}
-
-<!-- API search by ingredients -->
-<!-- <form id="search">
-  <input type="search" id="query" name="q" placeholder="Search by ingredients">
-  <input type="submit" value="search">
-  
-  <script src="/static/js/search.js"></script>
-</form>
-
-<div>  
-  <ul id="search-results"></ul>
-</div>
-
-<script src="/static/js/favorite.js"></script> -->
-
-
-<!-- <h1>Nice to meat you!</h1>
-
-  <ul>
-    <li><a href="/recipes">View all recipes</a></li>
-    <li><a href="/profile">View profile</a></li>
-    </ul>

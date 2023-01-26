@@ -7,11 +7,11 @@
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+        <div class="card bg-danger text-white" style="border-radius: 1rem; opacity: .75;">
           <div class="card-body p-5 text-center">
 
               <h2 class="fw-bold mb-2 text-uppercase">Create An Account</h2>
-              <p class="text-white-50 mb-5">Please enter your name, email and password.</p>
+              <p class="text-white-100 mb-5">Please enter your name, email and password.</p>
 
               <form action="/register" method="POST">
                 <div class="form-outline form-white mb-4">
@@ -45,21 +45,16 @@
   </div>
 </section>
 
-
-  <!-- <h1>Sign Up</h1>
-
-  <h2>Create an Account</h2>
-  <form action="/signup" method="POST">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name">
-    <br>
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email">
-    <br>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password">
-
-    <button type="submit">Sign Up</button>
-  </form> -->
+<style>
+  body {
+    background-image: url("/static/img/login-bg.jpg");
+    background-color: rgb(224, 234, 170);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position:relative;
+  }
+</style>
 
 {% endblock %}

@@ -25,7 +25,7 @@ let form = document.querySelector('#search').addEventListener("submit", (evt) =>
             <div class="card-body">
               <a class="card-title" href="/recipe/${recipe.id}">${recipe.title}</a>
               <hr>
-              <button class="btn btn-outline-success my-2 my-sm-0" id="fav-btn" type="button" data-recipe-id="${recipe.id}">Favorite</button>
+              <button class="btn btn-outline-danger my-2 my-sm-0" id="fav-btn" type="button" data-recipe-id="${recipe.id}">Favorite</button>
             </div>
           </div>
         </div>`

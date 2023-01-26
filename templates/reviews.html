@@ -8,7 +8,7 @@
   <h1> Your reviews</h1>  
 </div>
 
-<div class="container">
+<div class="container-fluid mt-4">
 <div class="user-reviews d-flex justify-content-center">
   <div class="accordion w-75" id="accordionExample">
     {% for review in recipe_reviews %}
@@ -30,4 +30,16 @@
     </div>
   </div> 
 </div>
+
+<style>
+  body {
+    background-image: url("/static/img/review-bg.jpg");
+    background-color: rgb(224, 234, 170);
+    height: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+</style>
 {% endblock %}

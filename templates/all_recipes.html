@@ -18,9 +18,9 @@
 			<div class="card h-80 text-center box-shadow mb-3 mx-auto my-5" style="width: 25rem;">
 			<img src="{{recipe.image_url}}" class="card-img-top">
 			<div class="card-body">
-				<a class="card-title" href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a>
+				<a class="card-title" style="text-decoration: none;"href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a>
 				<hr>
-				<button class="btn btn-outline-success my-2 my-sm-0" id="fav-btn" type="button" data-recipe-id="{{ recipe.id }}">Favorite</button>
+				<button class="btn btn-outline-danger my-2 my-sm-0" id="fav-btn" type="button" data-recipe-id="{{ recipe.id }}">Favorite</button>
 			</div>
 			</div>
 		</div>
@@ -37,6 +37,16 @@
 
 <!-- styling of cards-->
 <style>
+
+  body {
+    background-color: rgb(224, 234, 170);
+    height: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position:relative;
+  }
+
   a{
 	cursor:pointer;
 }
@@ -52,7 +62,7 @@ h5{
 
 .box-shadow{
 	-webkit-box-shadow: 0 1px 1px rgba(72,78,85,.6);
-	box-shadow: 0 1px 1px rgba(72,78,85,.6);
+	box-shadow: 0 1px 1px rgba(80,17,42,1.00);
 	-webkit-transition: all .2s ease-out;
 	-moz-transition: all .2s ease-out;
 	-ms-transition: all .2s ease-out;
@@ -62,7 +72,7 @@ h5{
 
 .box-shadow:hover{
 	-webkit-box-shadow: 0 20px 40px rgba(72,78,85,.6);
-	box-shadow: 0 20px 40px rgba(72,78,85,.6);
+	box-shadow: 0 20px 40px rgba(80,17,42,1.00);
 	-webkit-transform: translateY(-15px);
 	-moz-transform: translateY(-15px);
 	-ms-transform: translateY(-15px);

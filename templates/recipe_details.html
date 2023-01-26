@@ -8,7 +8,7 @@
     <h1>{{ recipe.title }}</h1>
 </div>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mt-4">
     {% if recipe.image_url %}
         <p id="image">
             <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
@@ -65,38 +65,15 @@
     <script src="/static/js/reviews.js"></script>
 </form>
     
+<style>
+  body {
+    background-color: rgb(224, 234, 170);
+    height: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+</style>
 
-
-<!-- <div class="container">
-    <form id="review-form">
-        <input type="text" name="review" id="reviews" recipeid="{{recipe.id}}" placeholder="Please leave your reviews/comments here!">
-        <input type="submit" id="submit-reviews" value="Submit">
-        <label for="submit" id="my-label"></label>
-        
-        <script src="/static/js/reviews.js"></script>
-    </form>
-    <div class="d-flex justify-content-center">
-    {% if recipe.image_url %}
-        <p id="image">
-            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}">
-        </p>
-    {% endif %}
-    </div>
-
-    <p id="summary">
-        Summary: <br>
-        {{ recipe.summary|safe }}
-    </p>
-
-    <p id="ingredients">
-        Ingredients: <br>
-        {{ recipe.ingredients|safe }}
-    </p>
-
-    <p id="instructions">
-        Instructions: <br>
-        {{ recipe.instructions|safe }}
-    </p>
-
-</div> -->
 {% endblock %}

@@ -27,7 +27,6 @@ class Recipe(db.Model):
     __tablename__ = "recipes"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     title = db.Column(db.String(200), unique=True)
     ingredients = db.Column(db.Text)
     summary = db.Column(db.Text)

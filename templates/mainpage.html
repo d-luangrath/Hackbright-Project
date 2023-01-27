@@ -7,7 +7,7 @@
 <style>
   body {
     background-image: url("/static/img/search-bg.jpg");
-    background-color: rgb(224, 234, 170);
+    background-color: rgb(255, 255, 255);
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -19,8 +19,10 @@
   <h1> Welcome, {{ session['name']|capitalize }}!</h1>
 </div>
 
+
 <div class="container d-flex justify-content-center mt-5">
   <div class="row w-50">
+    <h2> Penne for you thoughts?</h2>
     <div class="col-10">
       <form class="form-inline" id="search">
         <input class="form-control mr-sm-2" type="search" id="query" name="q" placeholder="Search by ingredients" aria-label="Search">

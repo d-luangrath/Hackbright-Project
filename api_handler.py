@@ -9,7 +9,7 @@ def get_random_recipes_from_api():
         raise Exception("API key is not found. Did you forget to 'source secrets.sh'?")
 
     url = f"https://api.spoonacular.com/recipes/random?apiKey={api_key}"
-    payload = {'number': 3}
+    payload = {'number': 20}
 
     response = requests.request("GET", url, params=payload)
     recipes = response.json()['recipes']

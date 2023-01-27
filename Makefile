@@ -21,7 +21,7 @@ bootstrap:
 	@echo -e "\033[32mBootstrapping DB from the dump file...\033[0m"
 	psql recipes < bootstrap.sql
 
-recreate_db: drop_db create_db bootstrap
+recreate_db: drop_db create_db seed
 	@echo "DB is recreated!"
 
 show_users:

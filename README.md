@@ -39,8 +39,8 @@ a record of a recipe is added the database. If a user decides that they do not l
 
 4. **Write a review for a recipe in the text box on the bottom of the recipe's page. A user can update their reviewed recipes by simply writing a new review on that recipe**
 
-![Write review](/static/img/review-bg.jpg)
+![Write review](/static/img/review%20submission.png)
 
 5. **A user can look at all of their reviews on "Your Reviews" page.**
 
-![Your reviews](/static/img/review%20submission.png)
+![Your reviews](/static/img/reviews.png)

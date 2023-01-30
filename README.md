@@ -29,7 +29,7 @@ a record of a recipe is added the database. If a user decides that they do not l
 
 ![Login page](/static/img/login.png)
 
-2. **Type in the ingredient you want to make a recipe with**
+2. **Type in the ingredient you want to make a recipe with. Click on the recipe to redirect to the recipe page or click on "favorite" to save the recipe on your favorites**
 
 ![Search form](/static/img/search%20form.png)
 

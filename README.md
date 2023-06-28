@@ -44,3 +44,10 @@ a record of a recipe is added the database. If a user decides that they do not l
 5. **A user can look at all of their reviews on "Your Reviews" page.**
 
 ![Your reviews](/static/img/reviews.png)
+
+---
+
+## Local development
+
+1. activate venv
+1. asfasdf

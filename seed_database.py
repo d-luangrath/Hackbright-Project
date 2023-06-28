@@ -4,14 +4,15 @@ import json
 
 import crud
 import model
-import server
+from server import app
 
 from crud import add_recipes_to_db, add_review_to_db
 from random import choice, randint
 from api_handler import get_random_recipes_from_api
 
-model.connect_to_db(server.app)
-model.db.create_all()
+model.connect_to_db(app)
+with app.app_context():
+    model.db.create_all()
 
 with open("fake_users.json") as f:
     """Load user data from JSON file"""

@@ -3,7 +3,9 @@ from flask import (Flask, render_template, request, flash, session, redirect, js
 from model import connect_to_db, db
 from datetime import datetime
 import crud
+import sys
 
+from config import BaseConfig
 
 from jinja2 import StrictUndefined
 from api_handler import (
@@ -12,7 +14,9 @@ from api_handler import (
     get_random_recipes_from_api,
 )
 
+print(f"\033[35m█▓▒░ {__name__} | Initializing the app \033[0m", flush=True)
 app = Flask(__name__)
+app.config.from_object(BaseConfig)
 app.app_context().push()
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
@@ -206,6 +210,8 @@ def show_fav_recipes():
 
 
 if __name__ == "__main__":
-    connect_to_db(app)
-
-    app.run(host="0.0.0.0", debug=True)
+    # print(f"\033[36m█▓▒░ Connecting to db \033[0m", flush=True)
+    # connect_to_db(app)
+    
+    print(f"\033[36m█▓▒░ {__name__} | Starting the app \033[0m")
+    app.run(host="0.0.0.0", port=8000,  debug=True)

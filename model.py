@@ -72,21 +72,21 @@ class Review(db.Model):
 
 # user => recipes => ingredients
 
-
-def connect_to_db(flask_app, db_uri="postgresql:///recipes"):
+# db_uri="postgresql:///recipes"
+def connect_to_db(flask_app):
     """Connect to database."""
 
-    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-    flask_app.config["SQLALCHEMY_ECHO"] = True
-    flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # flask_app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:5437/recipes"
+    # flask_app.config["SQLALCHEMY_ECHO"] = True
+    # flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    db.app = flask_app
+    # db.app = flask_app
     db.init_app(flask_app)
 
-    print("Connected to the db!")
+    print("DB configured for the Flask app")
 
 
-if __name__ == "__main__":
-    from server import app
+# if __name__ == "__main__":
+#     from server import app
     
-    connect_to_db(app)
+#     connect_to_db(app)

@@ -3,3 +3,5 @@ __pycache__
 secrets.sh
 .DS_Store
 *.ipynb
+
+postgres-data
